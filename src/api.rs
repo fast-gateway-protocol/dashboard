@@ -77,10 +77,7 @@ pub async fn list_services() -> impl IntoResponse {
                             let result = response.result.unwrap_or_default();
                             let version = result["version"].as_str().map(|s| s.to_string());
                             let uptime = result["uptime_seconds"].as_u64();
-                            let status = result["status"]
-                                .as_str()
-                                .unwrap_or("running")
-                                .to_string();
+                            let status = result["status"].as_str().unwrap_or("running").to_string();
                             (status, version, uptime)
                         }
                         _ => ("not_responding".to_string(), None, None),
@@ -114,7 +111,10 @@ pub async fn service_health(Path(service): Path<String>) -> impl IntoResponse {
     if !socket_path.exists() {
         return (
             StatusCode::NOT_FOUND,
-            ApiResponse::<serde_json::Value>::error(&format!("Service '{}' is not running", service)),
+            ApiResponse::<serde_json::Value>::error(&format!(
+                "Service '{}' is not running",
+                service
+            )),
         );
     }
 

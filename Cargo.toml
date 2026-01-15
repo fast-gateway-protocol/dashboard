@@ -1,0 +1,37 @@
+[package]
+name = "fgp-dashboard"
+version = "0.1.0"
+edition = "2021"
+description = "Web dashboard for monitoring FGP daemon services"
+license = "MIT"
+repository = "https://github.com/fast-gateway-protocol/dashboard"
+
+[dependencies]
+# Web framework
+axum = "0.8"
+tokio = { version = "1", features = ["full"] }
+tower-http = { version = "0.6", features = ["cors"] }
+
+# FGP daemon client
+fgp-daemon = { path = "../daemon" }
+
+# Serialization
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+
+# Error handling
+anyhow = "1"
+
+# CLI
+clap = { version = "4", features = ["derive"] }
+
+# Logging
+tracing = "0.1"
+tracing-subscriber = { version = "0.3", features = ["env-filter"] }
+
+# Open browser
+open = "5"
+
+[[bin]]
+name = "fgp-dashboard"
+path = "src/main.rs"
